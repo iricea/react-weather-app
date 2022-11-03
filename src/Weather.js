@@ -4,9 +4,9 @@ import "./Weather.css";
 
 export default function Weather(props) {
   const apiKey = "c6cb65a19d9148cf4b429a8260e0f527";
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState(props.defaultCity);
   const [weather, setWeather] = useState({ loaded: false });
-  const [cityName, setCityName] = useState("");
+  const [cityName, setCityName] = useState(props.defaultCity);
   function handleSubmit(event) {
     event.preventDefault();
     let cityUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
@@ -15,6 +15,11 @@ export default function Weather(props) {
     function showCity(response) {
       setCityName(response.data[0].name);
     }
+  }
+
+  function searchDefault() {
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(showWeather);
   }
 
   function changeCity(event) {
@@ -86,8 +91,7 @@ export default function Weather(props) {
       </div>
     );
   } else {
-    // let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${props.defaultCity.lat}&lon=${props.defaultCity.lon}&appid=${apiKey}&units=metric`;
-    // axios.get(weatherUrl).then(showWeather);
+    searchDefault();
     return <div>{form}</div>;
   }
 }
