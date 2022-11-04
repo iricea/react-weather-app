@@ -32,9 +32,10 @@ export default function Weather(props) {
     axios.get(weatherUrl).then(showWeather);
   }
   function showWeather(response) {
-    console.log(response.data);
+    console.log(response.data.coord);
     setWeather({
       loaded: true,
+      coordinates: response.data.coord,
       temperature: Math.round(response.data.main.temp),
       date: new Date(response.data.dt * 1000),
       description: response.data.weather[0].description,
@@ -72,7 +73,7 @@ export default function Weather(props) {
       <div className="Weather">
         {form}
         <WeatherInfo data={weather} city={cityName} />
-        <WeatherForecast />
+        <WeatherForecast coordinates={weather.coordinates} />
       </div>
     );
   } else {
