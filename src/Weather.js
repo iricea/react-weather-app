@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Weather.css";
 import WeatherInfo from "./WeatherInfo";
+import WeatherForecast from "./WeatherForecast";
 
 export default function Weather(props) {
   const apiKey = "c6cb65a19d9148cf4b429a8260e0f527";
@@ -39,7 +40,7 @@ export default function Weather(props) {
       description: response.data.weather[0].description,
       wind: Math.round(response.data.wind.speed),
       humidity: response.data.main.humidity,
-      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      icon: response.data.weather[0].icon,
     });
   }
 
@@ -71,6 +72,7 @@ export default function Weather(props) {
       <div className="Weather">
         {form}
         <WeatherInfo data={weather} city={cityName} />
+        <WeatherForecast />
       </div>
     );
   } else {

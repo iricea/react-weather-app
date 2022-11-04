@@ -50,3 +50,7 @@
 
     vertical-align: top;
 }
+
+.Weather canvas {
+    margin-right: 10px;
+}
